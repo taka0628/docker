@@ -24,10 +24,12 @@ ENV LANGUAGE ja_JP:jp
 ENV LC_ALL ja_JP.UTF-8
 RUN update-locale LANG=ja_JP.UTF-8
 
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezon
+
 # 実行のためのパッケージ
 RUN apt-get update \
 && apt-get install -y\
-    evince \
+    # evince \
     texlive-fonts-extra \
     texlive-fonts-recommended \
     texlive-lang-cjk \
