@@ -31,8 +31,8 @@ jobs:
         with:
           tags: ${{ env.TAG }}
           build-args: TS=${{ github.sha }},DOCKER_USER_=${{ env.USER_NAME }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
       - name: docker build check
         if: ${{ failure() }}
@@ -42,7 +42,7 @@ jobs:
           build-args: TS=${{ github.sha }},DOCKER_USER_=${{ env.USER_NAME }}
           pull: true
           no-cache: true
-          cache-to: type=gha,mode=max
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
   BuildOnCache:
     runs-on: ubuntu-22.04
@@ -66,7 +66,7 @@ jobs:
           tags: ${{ env.TAG }}
           build-args: TS=${{ github.sha }},DOCKER_USER_=${{ env.USER_NAME }}
           load: true
-          cache-from: type=gha
+          cache-from: type=gha,src=/tmp/.buildx-cache
       - name: run
         run: |
           docker images
