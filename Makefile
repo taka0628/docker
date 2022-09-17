@@ -39,7 +39,7 @@ bash:
 # 起動，ファイルのコピーを行う
 pre-exec_:
 ifeq ($(shell docker ps -a | grep -c ${NAME}),0)
-	@docker container run \
+	docker container run \
 	-it \
 	--rm \
 	--network none \
@@ -48,7 +48,7 @@ ifeq ($(shell docker ps -a | grep -c ${NAME}),0)
 	${NAME}:latest
 endif
 ifeq (${IS_LINUX},Linux)
-	@-docker cp ~/.bashrc ${NAME}:${DOCKER_HOME_DIR}/.bashrc
+	-docker cp ~/.bashrc ${NAME}:${DOCKER_HOME_DIR}/.bashrc
 endif
 
 # コンテナ終了時の後処理
