@@ -7,7 +7,7 @@ on:
 
 env:
   # Docker イメージの tar アーカイブ出力先のパス
-  TAG: latex-container:latest
+  TAG: latex-container
   TS: $(TZ=UTC-9 date '+%Y%m%d%H%M%S')
   USER_NAME: guest
 
@@ -23,8 +23,6 @@ jobs:
       - name: use cache build
         uses: docker/build-push-action@v2
         with:
-          context: ./
-          file: ./Dockerfile
           tags: ${{ env.TAG }}
           build-args: TS=${{ env.TS }},DOCKER_USER_=${{ env.USER_NAME }}
           cache-from: type=gha
@@ -33,8 +31,6 @@ jobs:
         if: ${{ failure() }}
         uses: docker/build-push-action@v2
         with:
-          context: ./
-          file: ./Dockerfile
           tags: ${{ env.TAG }}
           build-args: DOCKER_USER_=${{ env.USER_NAME }}
           cache-to: type=gha,mode=max
@@ -44,6 +40,8 @@ jobs:
         run: |
           docker images
           docker ps
+          make pre-exec_
+          make post-exec_
 
   BuildOnCache:
     runs-on: ubuntu-22.04
