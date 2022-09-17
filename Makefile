@@ -7,9 +7,6 @@ CURRENT_PATH := $(shell pwd)
 TS := $(shell date +%Y%m%d%H%M%S)
 
 
-# GitHub Actions上でのTextLintのテスト用
-github_actions_lint_:
-	make lint > lint.log
 
 
 # コンテナのビルド
@@ -37,7 +34,6 @@ bash:
 	make pre-exec_ --no-print-directory
 	-docker container exec -it ${NAME} bash
 	make post-exec_ --no-print-directory
-
 
 # コンテナ実行する際の前処理
 # 起動，ファイルのコピーを行う
@@ -77,6 +73,7 @@ ifneq ($(shell docker container ls -a | grep -c "${NAME}"),0)
 	@echo "コンテナを停止"
 endif
 	@docker container ls -a
+
 
 
 # コマンドのテスト用
