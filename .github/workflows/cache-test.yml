@@ -26,8 +26,10 @@ jobs:
         with:
           tags: ${{ env.TAG }}
           build-args: TS=${{ env.TS }},DOCKER_USER_=${{ env.USER_NAME }}
+          load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
       - name: docker build check
         if: ${{ failure() }}
         uses: docker/build-push-action@v2
