@@ -24,6 +24,7 @@ jobs:
         with:
           tags: ${{ env.TAG }}
           build-args: TS=${{ github.sha }},DOCKER_USER_=${{ env.USER_NAME }}
+          push: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
