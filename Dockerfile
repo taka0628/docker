@@ -16,6 +16,12 @@ RUN apt-get install -y gcc
 RUN apt-get install -y perl
 RUN apt-get install -y g++
 
+ENV DIRPATH home/${DOCKER_USER_}
+WORKDIR $DIRPATH
+
+# ユーザ設定
+RUN useradd ${DOCKER_USER_} &&\
+	chown -R ${DOCKER_USER_} /${DIRPATH}
 
 ARG TS=null
 RUN apt-get update &&\
