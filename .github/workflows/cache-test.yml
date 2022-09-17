@@ -40,6 +40,10 @@ jobs:
           cache-to: type=gha,mode=max
           pull: true
           no-cache: true
+      - name: check
+        run: |
+          docker images
+          docker ps
 
   BuildOnCache:
     runs-on: ubuntu-22.04
