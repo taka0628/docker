@@ -46,7 +46,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
-          path: path/to/artifact/${{ env.TAG }}.tar
+          path: ${{ env.TAG }}.tar
 
   BuildOnCache:
     runs-on: ubuntu-22.04
