@@ -74,7 +74,11 @@ ifneq ($(shell docker container ls -a | grep -c "${NAME}"),0)
 endif
 	@docker container ls -a
 
+save:
+	docker save ${NAME} -o ${NAME}.tar
 
+load:
+	docker load < ${NAME}.tar
 
 # コマンドのテスト用
 test:
