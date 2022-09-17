@@ -50,6 +50,7 @@ ifeq ($(shell docker ps -a | grep -c ${NAME}),0)
 	-d \
 	--name ${NAME} \
 	${NAME}:latest
+endif
 ifeq (${IS_LINUX},Linux)
 	@-docker cp ~/.bashrc ${NAME}:${DOCKER_HOME_DIR}/.bashrc
 endif
