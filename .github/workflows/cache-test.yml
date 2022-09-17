@@ -31,7 +31,7 @@ jobs:
         with:
           tags: ${{ env.TAG }}
           build-args: TS=${{ github.sha }},DOCKER_USER_=${{ env.USER_NAME }}
-          cache-from: type=gha,src=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
       - name: docker build check
@@ -66,7 +66,7 @@ jobs:
           tags: ${{ env.TAG }}
           build-args: TS=${{ github.sha }},DOCKER_USER_=${{ env.USER_NAME }}
           load: true
-          cache-from: type=gha,src=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
       - name: run
         run: |
           docker images
