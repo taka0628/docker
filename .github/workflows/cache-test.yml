@@ -7,7 +7,7 @@ on:
 
 env:
   # Docker イメージの tar アーカイブ出力先のパス
-  TAG: latex-container
+  TAG: latex-container:latest
   TS: $(TZ=UTC-9 date '+%Y%m%d%H%M%S')
   USER_NAME: guest
 
@@ -25,6 +25,7 @@ jobs:
         with:
           context: ./
           file: ./Dockerfile
+          TAG: ${{ env.TAG }}
           build-args: TS=${{ env.TS }},DOCKER_USER_=${{ env.USER_NAME }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -34,6 +35,8 @@ jobs:
         with:
           context: ./
           file: ./Dockerfile
+          TAG: ${{ env.TAG }}
+          build-args: DOCKER_USER_=${{ env.USER_NAME }}
           cache-to: type=gha,mode=max
           pull: true
           no-cache: true
