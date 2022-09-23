@@ -19,57 +19,9 @@ jobs:
         uses: actions/checkout@v2
       - name: setup docker
         uses: docker/setup-buildx-action@v2
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-      - name: use cache build
-        uses: docker/build-push-action@v2
-        with:
-          tags: ${{ env.TAG }}
-          build-args: TS=${{ github.sha }},DOCKER_USER_=${{ env.USER_NAME }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
-
-      - name: docker build check
-        if: ${{ failure() }}
-        uses: docker/build-push-action@v2
-        with:
-          tags: ${{ env.TAG }}
-          build-args: TS=${{ github.sha }},DOCKER_USER_=${{ env.USER_NAME }}
-          pull: true
-          no-cache: true
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
-
-  BuildOnCache:
-    runs-on: ubuntu-22.04
-    timeout-minutes: 30
-    needs: Build
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v2
-      - name: setup docker
-        uses: docker/setup-buildx-action@v2
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-      - name: use cache build
-        uses: docker/build-push-action@v2
-        with:
-          tags: ${{ env.TAG }}
-          build-args: TS=${{ github.sha }},DOCKER_USER_=${{ env.USER_NAME }}
-          load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-      - name: run
+      - name: docker build
         run: |
-          docker images
-          docker ps
-          make pre-exec_
-          make post-exec_
+          docker buildx build --build-arg TS=${{ github.sha }} --load --cache-from=type=gha --cache-to=type=gha,mode=max --tag test-container .
+      - name: docker rebuild
+        run: |
+          docker buildx build --build-arg TS=${{ github.sha }} --load --cache-from=type=gha --cache-to=type=gha,mode=max --tag test-container .

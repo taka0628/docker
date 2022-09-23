@@ -1,5 +1,5 @@
 # コンテナ名
-NAME := latex-container
+NAME := apt-fast
 
 DOCKER_USER_NAME := guest
 DOCKER_HOME_DIR := /home/${DOCKER_USER_NAME}
