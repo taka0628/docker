@@ -30,11 +30,11 @@ jobs:
       - name: docker build
         run: |
           docker buildx build --build-arg TS=${{ github.sha }} --load \
-          --cache-from=type=type=local,src=/tmp/.buildx-cache \
+          --cache-from=type=local,src=/tmp/.buildx-cache \
           --cache-to=type=local,dest=/tmp/.buildx-cache,mode=max \
           --tag test-container .
       - name: docker rebuild
         run: |
           docker buildx build --build-arg TS=${{ github.sha }} --load \
-          --cache-from=type=type=local,src=/tmp/.buildx-cache \
+          --cache-from=type=local,src=/tmp/.buildx-cache \
           --tag test-container .
