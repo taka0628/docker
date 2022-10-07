@@ -21,7 +21,6 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: test
         run: |
-          echo "hogehoge" > test.txt
-          ls -al
+          make build
+          make test > test.txt
           cat test.txt
-

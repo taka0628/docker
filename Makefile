@@ -37,7 +37,7 @@ bash:
 
 # コンテナ実行する際の前処理
 # 起動，ファイルのコピーを行う
-pre-exec_:
+preExec_:
 ifeq ($(shell docker ps -a | grep -c ${NAME}),0)
 	docker container run \
 	-it \
@@ -53,7 +53,7 @@ endif
 
 # コンテナ終了時の後処理
 # コンテナ内のファイルをローカルへコピー，コンテナの削除を行う
-post-exec_:
+postExec_:
 	docker container stop ${NAME}
 
 # dockerのリソースを開放
@@ -82,4 +82,7 @@ load:
 
 # コマンドのテスト用
 test:
-	sed "$(shell $(expr $(grep -n "section{はじめに}" workspace/semi.tex | cut -d ":" -f 1) + 1))/171d" workspace/semi.tex
+	make preExec_ -s
+	-docker container exec -it ${NAME} bash -c "echo hogeInDocker"
+	make postExec_ -s
+
