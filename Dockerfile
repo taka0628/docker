@@ -21,4 +21,9 @@ ARG TS
 RUN apt-fast update &&\
     apt-fast upgrade -y
 
+WORKDIR /home/${DOCKER_USER_}
+
+RUN useradd ${DOCKER_USER_}\
+	&& chown -R ${DOCKER_USER_} /home/${DOCKER_USER_}
+
 USER ${DOCKER_USER_}
