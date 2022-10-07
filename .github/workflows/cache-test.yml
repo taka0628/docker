@@ -19,22 +19,9 @@ jobs:
         uses: actions/checkout@v2
       - name: setup docker
         uses: docker/setup-buildx-action@v2
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
+      - name: test
+        run: |
+          echo "hogehoge" > test.txt
+          ls -al
+          cat test.txt
 
-      - name: docker build
-        run: |
-          docker buildx build --build-arg TS=${{ github.sha }} --load \
-          --cache-from=type=local,src=/tmp/.buildx-cache \
-          --cache-to=type=local,dest=/tmp/.buildx-cache,mode=max \
-          --tag test-container .
-      - name: docker rebuild
-        run: |
-          docker buildx build --build-arg TS=${{ github.sha }} --load \
-          --cache-from=type=local,src=/tmp/.buildx-cache \
-          --tag test-container .

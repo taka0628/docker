@@ -1,5 +1,5 @@
 # コンテナ名
-NAME := apt-fast
+NAME := actions-test
 
 DOCKER_USER_NAME := guest
 DOCKER_HOME_DIR := /home/${DOCKER_USER_NAME}
