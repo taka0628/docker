@@ -23,4 +23,5 @@ jobs:
         run: |
           make build
           make test > test.txt
+          ls -al
           cat test.txt
