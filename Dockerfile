@@ -9,7 +9,7 @@ ARG APT_LINK=http://ftp.riken.jp/Linux/ubuntu/
 RUN sed -i "s-$(cat /etc/apt/sources.list | grep -v "#" | cut -d " " -f 2 | grep -v "security" | sed "/^$/d" | sed -n 1p)-${APT_LINK}-g" /etc/apt/sources.list
 
 RUN apt-get -q update &&\
-    apt-get -q install gcc make
+    apt-get -q install -y gcc make
 
 WORKDIR /home/${DOCKER_USER_}
 
