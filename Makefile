@@ -83,6 +83,6 @@ load:
 # コマンドのテスト用
 test:
 	make preExec_ -s
-	-docker container exec -it ${NAME} bash -c "echo hogeInDocker"
+	-docker container exec ${NAME} bash -c "echo hogeInDocker > test.txt && cat test.txt"
 	make postExec_ -s
 
